@@ -7,6 +7,7 @@ import estopa.agenda_facil.model.entity.Cliente;
 import estopa.agenda_facil.model.repository.CarteiraRepository;
 import estopa.agenda_facil.model.repository.ClienteRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +17,7 @@ public class ClienteService {
 
     private final ClienteRepository clienteRepository;
     private final CarteiraRepository carteiraRepository;
+    private final PasswordEncoder encriptadorDeSenha;
 
     @Transactional
     public void cadastrarCliente(ClienteCadastroDto dto) {
@@ -24,10 +26,12 @@ public class ClienteService {
             throw new RegraNegocioException("Já existe um cliente cadastrado com este CPF.");
         }
 
+        String senhaCriptografada = encriptadorDeSenha.encode(dto.senha());
+
         Cliente cliente = new Cliente(
                 dto.nome(),
                 dto.email(),
-                dto.senha(),
+                senhaCriptografada,
                 dto.cpf(),
                 dto.telefone()
         );

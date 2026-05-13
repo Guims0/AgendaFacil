@@ -7,6 +7,7 @@ import estopa.agenda_facil.model.entity.Estabelecimento;
 import estopa.agenda_facil.model.repository.CarteiraRepository;
 import estopa.agenda_facil.model.repository.EstabelecimentoRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +17,7 @@ public class EstabelecimentoService {
 
     private final EstabelecimentoRepository estabelecimentoRepository;
     private final CarteiraRepository carteiraRepository;
+    private final PasswordEncoder encriptadorDeSenha;
 
     @Transactional
     public void cadastrarEstabelecimento(EstabelecimentoCadastroDto dto) {
@@ -24,10 +26,12 @@ public class EstabelecimentoService {
             throw new RegraNegocioException("Já existe um estabelecimento com este CNPJ.");
         }
 
+        String senhaCriptografada = encriptadorDeSenha.encode(dto.senha());
+
         Estabelecimento estabelecimento = new Estabelecimento(
                 dto.nome(),
                 dto.email(),
-                dto.senha(),
+                senhaCriptografada,
                 dto.cnpj(),
                 dto.intervaloAtendimentoMinutos(),
                 dto.descricaoEspecialidade(),
