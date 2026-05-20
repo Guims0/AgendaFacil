@@ -23,4 +23,10 @@ public interface AgendamentoRepository extends JpaRepository<Agendamento, Long> 
     @Modifying(clearAutomatically = true, flushAutomatically = true)
     @Query("UPDATE Agendamento a SET a.statusAgendamento = :novoStatus WHERE a.id = :id")
     void atualizarStatusAgendamento(@Param("id") Long id, @Param("novoStatus") StatusAgendamento novoStatus);
+
+    boolean existsByEstabelecimentoIdAndDataHoraAndStatusAgendamentoIn(
+            Long estabelecimentoId,
+            java.time.LocalDateTime dataHora,
+            java.util.List<estopa.agenda_facil.model.enums.StatusAgendamento> status
+    );
 }
