@@ -88,4 +88,21 @@ public class PagamentoService {
         }
         return agendamento;
     }
+
+    @Transactional
+    public void estornarPagamentoOnline(Long idAgendamento, Double valorDoServico, Long idCliente, Long idEstabelecimento) {
+
+        Carteira carteiraCliente = carteiraRepository.findByUsuarioId(idCliente)
+                .orElseThrow(() -> new RegraNegocioException("Carteira do cliente não encontrada."));
+
+        Carteira carteiraEstab = carteiraRepository.findByUsuarioId(idEstabelecimento)
+                .orElseThrow(() -> new RegraNegocioException("Carteira do estabelecimento não encontrada."));
+
+        Double taxaPlataforma = valorDoServico * TAXA_USO_CARTEIRA;
+        Double valorLiquidoEstabelecimento = valorDoServico - taxaPlataforma;
+
+        carteiraRepository.adicionarSaldo(carteiraCliente.getId(), valorDoServico);
+
+        carteiraRepository.debitarSaldo(carteiraEstab.getId(), valorLiquidoEstabelecimento);
+    }
 }
