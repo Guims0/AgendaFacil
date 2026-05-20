@@ -23,11 +23,25 @@ public class Estabelecimento extends Usuario {
 
     private boolean aprovacaoAutomatica;
 
-    public Estabelecimento(String nome, String email, String senha, String cnpj, Integer intervaloAtendimentoMinutos, String descricaoEspecialidade, boolean aprovacaoAutomatica) {
+    public Estabelecimento(String nome, String email, String senha,String cnpj,
+                           Integer intervaloAtendimentoMinutos, String descricaoEspecialidade,
+                           boolean aprovacaoAutomatica) {
         super(nome, email, senha, RoleUsuario.ESTABELECIMENTO);
         this.cnpj = cnpj;
         this.intervaloAtendimentoMinutos = intervaloAtendimentoMinutos;
         this.descricaoEspecialidade = descricaoEspecialidade;
         this.aprovacaoAutomatica = aprovacaoAutomatica;
+    }
+
+    public void atualizar(String nome, String email, String senhaCriptografada,
+                          String descricaoEspecialidade, Integer intervaloAtendimentoMinutos,
+                          Boolean aprovacaoAutomatica) {
+        super.atualizarDadosBase(nome, email, senhaCriptografada);
+        if (descricaoEspecialidade != null && !descricaoEspecialidade.isBlank())
+            this.descricaoEspecialidade = descricaoEspecialidade;
+        if (intervaloAtendimentoMinutos != null)
+            this.intervaloAtendimentoMinutos = intervaloAtendimentoMinutos;
+        if (aprovacaoAutomatica != null)
+            this.aprovacaoAutomatica = aprovacaoAutomatica;
     }
 }

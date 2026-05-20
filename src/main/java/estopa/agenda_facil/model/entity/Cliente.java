@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "tb_clientes")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Cliente extends Usuario{
+public class Cliente extends Usuario {
 
     @Column(unique = true)
     private String cpf;
@@ -23,5 +23,10 @@ public class Cliente extends Usuario{
         super(nome, email, senha, RoleUsuario.CLIENTE);
         this.cpf = cpf;
         this.telefone = telefone;
+    }
+
+    public void atualizar(String nome, String email, String senhaCriptografada, String telefone) {
+        super.atualizarDadosBase(nome, email, senhaCriptografada);
+        if (telefone != null && !telefone.isBlank()) this.telefone = telefone;
     }
 }

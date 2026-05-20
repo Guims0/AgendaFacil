@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode(of = "id")
 public class Agendamento {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -37,12 +38,18 @@ public class Agendamento {
     @JoinColumn(name = "estabelecimento_id")
     private Estabelecimento estabelecimento;
 
-    public Agendamento(LocalDateTime dataHora, FormaPagamento formaPagamento, StatusAgendamento statusAgendamento, StatusPagamento statusPagamento, Cliente cliente, Estabelecimento estabelecimento) {
+
+    @ManyToOne
+    @JoinColumn(name = "servico_id")
+    private Servico servico;
+
+    public Agendamento(LocalDateTime dataHora, FormaPagamento formaPagamento, StatusAgendamento statusAgendamento, StatusPagamento statusPagamento, Cliente cliente, Estabelecimento estabelecimento, Servico servico) {
         this.dataHora = dataHora;
         this.formaPagamento = formaPagamento;
         this.statusAgendamento = statusAgendamento;
         this.statusPagamento = statusPagamento;
         this.cliente = cliente;
         this.estabelecimento = estabelecimento;
+        this.servico = servico;
     }
 }
