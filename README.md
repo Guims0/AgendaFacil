@@ -1,6 +1,6 @@
-# API Agenda Fácil — Sistema de Agendamentos
+# Agenda Fácil — Sistema de Agendamentos
 
-Uma API RESTful desenvolvida em Java e Spring Boot para o gerenciamento de agendamentos e repasses financeiros entre Clientes e Estabelecimentos de serviços. Totalmente documentada via Swagger.
+Uma API REST desenvolvida em Java e Spring Boot para o gerenciamento de agendamentos e repasses financeiros entre Clientes e Estabelecimentos de serviços. Totalmente documentada via Swagger.
 
 ---
 
